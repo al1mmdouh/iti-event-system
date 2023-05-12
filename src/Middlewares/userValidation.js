@@ -1,6 +1,6 @@
 const { body, validationResult, check } = require("express-validator");
 
-const speakerValidationRules = () => {
+const userValidationRules = () => {
   return [
     body("fullname").isString().withMessage("Full name must be a string"),
 
@@ -12,7 +12,7 @@ const speakerValidationRules = () => {
   ];
 };
 
-const validateSpeaker = (req, res, next) => {
+const validateUser = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();
@@ -24,7 +24,7 @@ const validateSpeaker = (req, res, next) => {
   });
 };
 
-const speakerUpdateValidationRules = () => {
+const userUpdateValidationRules = () => {
   return [
     check("fullname")
       .optional()
@@ -37,7 +37,7 @@ const speakerUpdateValidationRules = () => {
       .withMessage("Password must be at least 8 characters."),
   ];
 };
-const validateUpdateSpeaker = (req, res, next) => {
+const validateUpdateUser = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();
@@ -50,8 +50,8 @@ const validateUpdateSpeaker = (req, res, next) => {
 };
 
 module.exports = {
-  speakerValidationRules,
-  validateSpeaker,
-  speakerUpdateValidationRules,
-  validateUpdateSpeaker,
+  userValidationRules,
+  validateUser,
+  userUpdateValidationRules,
+  validateUpdateUser,
 };

@@ -1,4 +1,4 @@
-const Speaker = require("./../Models/speakerModel");
+const Speaker = require("../Models/userModel");
 const jwt = require("jsonwebtoken");
 
 // speaker login --> x

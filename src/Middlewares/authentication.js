@@ -1,9 +1,13 @@
-const { request } = require("express");
 const jwt = require("jsonwebtoken");
 
-const auth = (req, res, next) => {
-  const token = req.get("Authorization").split(" ")[1];
-  const decodedToken = jwt.verify(token, "mySecretKey");
-
+const auth = async (req, res, next) => {
+  try {
+    const token = req.get("Authorization").split(" ")[1];
+    const decodedToken = await jwt.verify(token, "mySecretKey");
+  } catch (error) {
+    next(error);
+  }
   next();
 };
+
+module.exports = auth;

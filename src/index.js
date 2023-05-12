@@ -3,14 +3,18 @@ const mongoose = require("mongoose");
 const notFound = require("./Routers/notFound");
 const error = require("./Middlewares/error");
 const speakerRoute = require("./Routers/speakerRoute");
-const loginRoute = require("./Routers/login");
+const studentRoute = require("./Routers/studentRoute");
+
+// const loginRoute = require("./Routers/login");
 
 const app = express();
 
 app.use(express.json());
-
 //login route
-app.use(loginRoute);
+// app.use(loginRoute);
+
+//student route
+app.use(studentRoute);
 
 //speakers route
 app.use(speakerRoute);

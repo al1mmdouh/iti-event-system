@@ -1,18 +1,19 @@
-const Speaker = require("../Models/userModel");
+const Student = require("../Models/userModel");
 const Role = require("../Models/roleModel");
 
-const createSpeaker = async (req, res, next) => {
+const createStudent = async (req, res, next) => {
   try {
-    const speakerRole = await Role.findOne({ role: "speaker" });
-
-    const newSpeaker = await Speaker.create({
+    const studentRole = await Role.findOne({ role: "student" });
+    const newStudent = await Student.create({
       ...req.body,
-      role: speakerRole._id,
+      role: studentRole._id,
     });
+
+    console.log(newStudent);
     res.status(200).json({
       status: "success",
       data: {
-        speaker: newSpeaker,
+        student: newStudent,
       },
     });
   } catch (error) {
@@ -20,14 +21,14 @@ const createSpeaker = async (req, res, next) => {
   }
 };
 
-const getAllSpeakers = async (_req, res, next) => {
+const getAllStudents = async (_req, res, next) => {
   try {
-    const speakers = await Speaker.find();
+    const students = await Student.find();
     res.status(200).json({
       status: "success",
-      result: speakers.length,
+      result: students.length,
       data: {
-        speakers,
+        students,
       },
     });
   } catch (error) {
@@ -35,19 +36,19 @@ const getAllSpeakers = async (_req, res, next) => {
   }
 };
 
-const getSpeakerById = async (req, res, next) => {
+const getStudentById = async (req, res, next) => {
   try {
-    const speaker = await Speaker.findById(req.params.id);
-    if (!speaker) {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
       return res.status(404).json({
         status: "fail",
-        message: "Speaker not Found",
+        message: "Student not Found",
       });
     }
     res.status(200).json({
       status: "success",
       data: {
-        speaker,
+        student,
       },
     });
   } catch (error) {
@@ -55,13 +56,13 @@ const getSpeakerById = async (req, res, next) => {
   }
 };
 
-const updateSpeaker = async (req, res, next) => {
+const updateStudent = async (req, res, next) => {
   try {
-    const speaker = await Speaker.findByIdAndUpdate(req.params.id, req.body, {
+    const student = await Student.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    if (!speaker) {
+    if (!student) {
       return res.status(404).json({
         status: "fail",
         message: "Speaker not Found",
@@ -70,7 +71,7 @@ const updateSpeaker = async (req, res, next) => {
     res.status(200).json({
       status: "success",
       data: {
-        speaker,
+        student,
       },
     });
   } catch (error) {
@@ -78,10 +79,10 @@ const updateSpeaker = async (req, res, next) => {
   }
 };
 
-const deleteSpeaker = async (req, res, next) => {
+const deleteStudent = async (req, res, next) => {
   try {
-    const speaker = await Speaker.findByIdAndDelete(req.params.id);
-    if (!speaker) {
+    const student = await Student.findByIdAndDelete(req.params.id);
+    if (!student) {
       return res.status(404).json({
         status: "fail",
         message: "Speaker not Found",
@@ -97,9 +98,9 @@ const deleteSpeaker = async (req, res, next) => {
 };
 
 module.exports = {
-  createSpeaker,
-  getAllSpeakers,
-  getSpeakerById,
-  updateSpeaker,
-  deleteSpeaker,
+  createStudent,
+  getAllStudents,
+  getStudentById,
+  updateStudent,
+  deleteStudent,
 };

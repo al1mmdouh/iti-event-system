@@ -1,8 +1,6 @@
-//Speaker Data: _id(objectID), fullname,password, email , image (which is string)
-
 const mongoose = require("mongoose");
 
-const speakerSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   fullname: {
     type: String,
     required: true,
@@ -22,8 +20,13 @@ const speakerSchema = new mongoose.Schema({
     trim: true,
     minlength: 8,
   },
+  role: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Role",
+    default: "student",
+  },
 });
 
-const Speaker = mongoose.model("Speaker", speakerSchema);
+const User = mongoose.model("User", userSchema);
 
-module.exports = Speaker;
+module.exports = User;
