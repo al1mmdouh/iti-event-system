@@ -1,0 +1,29 @@
+//Speaker Data: _id(objectID), fullname,password, email , image (which is string)
+
+const mongoose = require("mongoose");
+
+const speakerSchema = new mongoose.Schema({
+  fullname: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    match: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 8,
+  },
+});
+
+const Speaker = mongoose.model("Speaker", speakerSchema);
+
+module.exports = Speaker;
