@@ -9,8 +9,7 @@ const createStudent = async (req, res, next) => {
       role: studentRole._id,
     });
 
-    console.log(newStudent);
-    res.status(200).json({
+    res.status(201).json({
       status: "success",
       data: {
         student: newStudent,
@@ -21,9 +20,18 @@ const createStudent = async (req, res, next) => {
   }
 };
 
+// Only records with student role retrieved
 const getAllStudents = async (_req, res, next) => {
   try {
-    const students = await Student.find();
+    const role = await Role.findOne({ role: "student" });
+    if (!role) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid role",
+      });
+    }
+
+    const students = await Student.find({ role: role._id }).exec();
     res.status(200).json({
       status: "success",
       result: students.length,
@@ -36,6 +44,7 @@ const getAllStudents = async (_req, res, next) => {
   }
 };
 
+//
 const getStudentById = async (req, res, next) => {
   try {
     const student = await Student.findById(req.params.id);
@@ -65,7 +74,7 @@ const updateStudent = async (req, res, next) => {
     if (!student) {
       return res.status(404).json({
         status: "fail",
-        message: "Speaker not Found",
+        message: "Student not Found",
       });
     }
     res.status(200).json({

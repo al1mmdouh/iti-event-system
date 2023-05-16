@@ -17,8 +17,8 @@ const eventSchema = new mongoose.Schema({
   },
   speakers: [
     {
-      type: String,
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Speaker",
     },
   ],
   students: [

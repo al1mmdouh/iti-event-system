@@ -2,8 +2,11 @@ const { Router } = require("express");
 
 const notFount = Router();
 
-notFount.route("/*").all((req, res) => {
-  res.status(404).json({ message: "Not Found" });
+notFount.route("/*").all((_req, res) => {
+  res.status(404).json({
+    status: "fail",
+    message: "Not Found",
+  });
 });
 
 module.exports = notFount;

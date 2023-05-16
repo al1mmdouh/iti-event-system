@@ -9,7 +9,7 @@ const createSpeaker = async (req, res, next) => {
       ...req.body,
       role: speakerRole._id,
     });
-    res.status(200).json({
+    res.status(201).json({
       status: "success",
       data: {
         speaker: newSpeaker,
@@ -20,9 +20,17 @@ const createSpeaker = async (req, res, next) => {
   }
 };
 
+// Only records with speaker role retrieved
 const getAllSpeakers = async (_req, res, next) => {
   try {
-    const speakers = await Speaker.find();
+    const role = await Role.findOne({ role: "speaker" });
+    if (!role) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid role",
+      });
+    }
+    const speakers = await Speaker.find({ role: role._id }).exec();
     res.status(200).json({
       status: "success",
       result: speakers.length,

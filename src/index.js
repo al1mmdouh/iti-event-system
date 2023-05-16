@@ -6,11 +6,17 @@ const speakerRoute = require("./Routers/speakerRoute");
 const studentRoute = require("./Routers/studentRoute");
 // const createRole = require("./Controllers/roleController")
 // createRole()
+// require('./Controllers/addAdmin');
 const loginRoute = require("./Routers/login");
+const registerRoute = require("./Routers/register");
 
 const app = express();
 
 app.use(express.json());
+
+//register route
+app.use(registerRoute);
+
 //login route
 app.use(loginRoute);
 
@@ -27,12 +33,12 @@ app.use(notFound);
 app.use(error);
 
 mongoose
-    .connect("mongodb://127.0.0.1:27017/eventSystem")
-    .then(() => {
-        console.log("DB Connected");
+  .connect("mongodb://127.0.0.1:27017/eventSystem")
+  .then(() => {
+    console.log("DB Connected");
 
-        app.listen(5000, () => {
-            console.log("Server started at port 5000");
-        });
-    })
-    .catch((err) => console.log("DB Connection Error." + err));
+    app.listen(process.env.PORT, () => {
+      console.log("Server started at port 5000");
+    });
+  })
+  .catch((err) => console.log("DB Connection Error." + err));
