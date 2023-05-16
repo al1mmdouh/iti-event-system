@@ -12,30 +12,10 @@ const eventValidationRules = () => {
       .notEmpty()
       .withMessage("Main speaker is required"),
     body("speakers").custom(async (value) => {
-      const speakerIds = value.map((speakerId) =>
-        mongoose.Types.ObjectId(speakerId)
-      );
-      const speakers = await User.find({
-        _id: { $in: speakerIds },
-        role: "speaker",
-      });
-      if (speakers.length !== value.length) {
-        throw new Error("Invalid speakers");
-      }
-      return true;
+      await User.validateIdsRole(value, "speaker");
     }),
     body("students").custom(async (value) => {
-      const studentIds = value.map((studentId) =>
-        mongoose.Types.ObjectId(studentId)
-      );
-      const students = await User.find({
-        _id: { $in: studentIds },
-        role: "student",
-      });
-      if (students.length !== value.length) {
-        throw new Error("Invalid students");
-      }
-      return true;
+      await User.validateIdsRole(value, "student");
     }),
   ];
 };
@@ -60,32 +40,12 @@ const eventUpdateValidationRules = () => {
     check("speakers")
       .optional()
       .custom(async (value) => {
-        const speakerIds = value.map((speakerId) =>
-          mongoose.Types.ObjectId(speakerId)
-        );
-        const speakers = await User.find({
-          _id: { $in: speakerIds },
-          role: "speaker",
-        });
-        if (speakers.length !== value.length) {
-          throw new Error("Invalid speakers");
-        }
-        return true;
+        await User.validateIdsRole(value, "speaker");
       }),
     check("students")
       .optional()
       .custom(async (value) => {
-        const studentIds = value.map((studentId) =>
-          mongoose.Types.ObjectId(studentId)
-        );
-        const students = await User.find({
-          _id: { $in: studentIds },
-          role: "student",
-        });
-        if (students.length !== value.length) {
-          throw new Error("Invalid students");
-        }
-        return true;
+        await User.validateIdsRole(value, "student");
       }),
   ];
 };
