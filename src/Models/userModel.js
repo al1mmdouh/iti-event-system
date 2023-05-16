@@ -27,6 +27,9 @@ const userSchema = new mongoose.Schema({
         default: "student",
     },
 });
+
+// is exist + role
+
 userSchema.pre('save', async function(next) {
     try {
         if (!this.isModified('password')) {

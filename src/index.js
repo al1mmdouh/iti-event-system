@@ -5,9 +5,6 @@ const error = require("./Middlewares/error");
 const speakerRoute = require("./Routers/speakerRoute");
 const studentRoute = require("./Routers/studentRoute");
 const morgan = require("morgan");
-// const createRole = require("./Controllers/roleController")
-// createRole()
-// require('./Controllers/addAdmin');
 const loginRoute = require("./Routers/login");
 const registerRoute = require("./Routers/register");
 const eventRoute = require("./Routers/eventRoute");

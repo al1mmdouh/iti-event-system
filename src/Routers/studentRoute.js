@@ -23,7 +23,7 @@ studentRoute
   .post(
     authenticate,
     checkRole(["student", "admin"]),
-    userValidationRules(),
+    userValidationRules,
     validateUser,
     createStudent
   ); //add new speaker --> admin only
@@ -33,8 +33,8 @@ studentRoute
   .get(getStudentById) //get speaker by id
   .put(
     authenticate,
-    checkRole(["student", "admin"]),
-    userUpdateValidationRules(),
+    checkRole(["student", "admin"]),//req.userId
+    userUpdateValidationRules,
     validateUser,
     updateStudent
   ) //update speaker user data --> admins or speaker itself; //get speaker by id --> all users

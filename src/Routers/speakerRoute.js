@@ -23,7 +23,7 @@ speakerRoute
   .post(
     authenticate,
     checkRole(["admin"]),
-    userValidationRules(),
+    userValidationRules,
     validateUser,
     createSpeaker
   ); //add new speaker --> admin only
@@ -34,7 +34,7 @@ speakerRoute
   .put(
     authenticate,
     checkRole(["admin", "speaker"]),
-    userUpdateValidationRules(),
+    userUpdateValidationRules,
     validateUser,
     updateSpeaker
   ) //update speaker user data --> admins or speaker itself; //get speaker by id --> all users

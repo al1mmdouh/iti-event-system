@@ -5,9 +5,7 @@ const eventValidationRules = () => {
   return [
     body("title").isString().withMessage("Event title must be a string"),
 
-    body("eventDate")
-      .isDate()
-      .withMessage("Password must be at least 8 characters."),
+    body("eventDate").isDate().withMessage("Date."),
 
     body("mainSpeaker")
       .trim()
@@ -100,7 +98,7 @@ const validateEvent = (req, res, next) => {
   const extractedErrors = [];
   errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
   return res.status(422).json({
-    status:"fail",
+    status: "fail",
     errors: extractedErrors,
   });
 };

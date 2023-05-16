@@ -10,6 +10,6 @@ const registerRoute = express.Router();
 // validate input FullName, email, password
 registerRoute
   .route("/register")
-  .post(userValidationRules(), validateUser, registerController);
+  .post(userValidationRules, validateUser, registerController);
 
 module.exports = registerRoute;
