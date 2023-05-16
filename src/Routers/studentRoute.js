@@ -11,7 +11,6 @@ const {
   userValidationRules,
   validateUser,
   userUpdateValidationRules,
-  validateUpdateUser,
 } = require("../Middlewares/userValidation");
 
 const { authenticate, checkRole } = require("./../Middlewares/authentication");
@@ -36,7 +35,7 @@ studentRoute
     authenticate,
     checkRole(["student", "admin"]),
     userUpdateValidationRules(),
-    validateUpdateUser,
+    validateUser,
     updateStudent
   ) //update speaker user data --> admins or speaker itself; //get speaker by id --> all users
   .delete(authenticate, checkRole(["admin"]), deleteStudent); //delete specified speaker --> admin only

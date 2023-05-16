@@ -4,21 +4,29 @@ const notFound = require("./Routers/notFound");
 const error = require("./Middlewares/error");
 const speakerRoute = require("./Routers/speakerRoute");
 const studentRoute = require("./Routers/studentRoute");
+const morgan = require("morgan");
 // const createRole = require("./Controllers/roleController")
 // createRole()
 // require('./Controllers/addAdmin');
 const loginRoute = require("./Routers/login");
 const registerRoute = require("./Routers/register");
+const eventRoute = require("./Routers/eventRoute");
+const accessLogStream = require("./Middlewares/morgan");
 
 const app = express();
 
 app.use(express.json());
+
+app.use(morgan("dev", { stream: accessLogStream }));
 
 //register route
 app.use(registerRoute);
 
 //login route
 app.use(loginRoute);
+
+//event route
+app.use(eventRoute);
 
 //student route
 app.use(studentRoute);
