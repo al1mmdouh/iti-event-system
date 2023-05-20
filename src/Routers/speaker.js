@@ -1,9 +1,10 @@
 const { Router } = require("express");
+const { validate } = require("../Middlewares/validation");
+
 const {
-  userValidationRules,
-  validateUser,
+  userCreateValidationRules,
   userUpdateValidationRules,
-} = require("../Middlewares/userValidation");
+} = require("../Models/user");
 
 const {
   createSpeaker,
@@ -11,9 +12,9 @@ const {
   getSpeakerById,
   updateSpeaker,
   deleteSpeaker,
-} = require("../Controllers/speakerController");
+} = require("../Controllers/speaker");
 
-const { authenticate, checkRole } = require("./../Middlewares/authentication");
+const { authenticate, checkRole } = require("../Middlewares/authentication");
 
 const speakerRoute = Router();
 
@@ -23,8 +24,7 @@ speakerRoute
   .post(
     authenticate,
     checkRole(["admin"]),
-    userValidationRules,
-    validateUser,
+    validate(userCreateValidationRules),
     createSpeaker
   ); //add new speaker --> admin only
 
@@ -34,8 +34,7 @@ speakerRoute
   .put(
     authenticate,
     checkRole(["admin", "speaker"]),
-    userUpdateValidationRules,
-    validateUser,
+    validate(userUpdateValidationRules),
     updateSpeaker
   ) //update speaker user data --> admins or speaker itself; //get speaker by id --> all users
   .delete(authenticate, checkRole(["admin"]), deleteSpeaker); //delete specified speaker --> admin only

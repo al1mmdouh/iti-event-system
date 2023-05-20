@@ -1,5 +1,5 @@
-const Student = require("../Models/userModel");
-const Role = require("../Models/roleModel");
+const { User: Student } = require("../Models/user");
+const Role = require("../Models/role");
 
 const createStudent = async (req, res, next) => {
   try {

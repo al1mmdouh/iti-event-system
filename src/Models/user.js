@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { body, check } = require("express-validator");
 
 const userSchema = new mongoose.Schema({
   fullname: {
@@ -61,4 +62,26 @@ User.validateIdsRole = async (ids, role) => {
   return true;
 };
 
-module.exports = User;
+const userCreateValidationRules = [
+  body("fullname").isString().withMessage("Full name must be a string"),
+
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters."),
+
+  body("email").isEmail().withMessage("Invalid email address"),
+];
+
+const userUpdateValidationRules = [
+  check("fullname")
+    .optional()
+    .isString()
+    .withMessage("Full name must be a string"),
+  check("email").optional().isEmail().withMessage("Invalid email address"),
+  check("password")
+    .optional()
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters."),
+];
+
+module.exports = { User, userCreateValidationRules, userUpdateValidationRules };

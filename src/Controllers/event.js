@@ -1,4 +1,4 @@
-const Event = require("../Models/eventModel");
+const {Event} = require("../Models/event");
 
 const getAllEvents = async (_req, res, next) => {
   try {
@@ -20,7 +20,10 @@ const getAllEvents = async (_req, res, next) => {
     next(error);
   }
 };
-
+// event --> 5 users shown up,
+// pagination --> metadata of rest of the objects
+// skip (1)
+// (2) next
 const getEventByID = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);

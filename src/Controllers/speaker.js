@@ -1,5 +1,5 @@
-const Speaker = require("../Models/userModel");
-const Role = require("../Models/roleModel");
+const { User: Speaker } = require("../Models/user");
+const Role = require("../Models/role");
 
 const createSpeaker = async (req, res, next) => {
   try {

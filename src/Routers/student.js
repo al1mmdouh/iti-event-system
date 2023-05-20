@@ -5,15 +5,16 @@ const {
   getStudentById,
   updateStudent,
   deleteStudent,
-} = require("../Controllers/studentController");
+} = require("../Controllers/student");
 
 const {
-  userValidationRules,
-  validateUser,
+  userCreateValidationRules,
   userUpdateValidationRules,
-} = require("../Middlewares/userValidation");
+} = require("../Models/user");
 
-const { authenticate, checkRole } = require("./../Middlewares/authentication");
+const { validate } = require("../Middlewares/validation");
+
+const { authenticate, checkRole } = require("../Middlewares/authentication"); // paths alias import
 
 const studentRoute = Router();
 
@@ -23,8 +24,7 @@ studentRoute
   .post(
     authenticate,
     checkRole(["student", "admin"]),
-    userValidationRules,
-    validateUser,
+    validate(userCreateValidationRules),
     createStudent
   ); //add new speaker --> admin only
 
@@ -33,9 +33,8 @@ studentRoute
   .get(getStudentById) //get speaker by id
   .put(
     authenticate,
-    checkRole(["student", "admin"]),//req.userId
-    userUpdateValidationRules,
-    validateUser,
+    checkRole(["student", "admin"]), //req.userId
+    validate(userUpdateValidationRules),
     updateStudent
   ) //update speaker user data --> admins or speaker itself; //get speaker by id --> all users
   .delete(authenticate, checkRole(["admin"]), deleteStudent); //delete specified speaker --> admin only

@@ -1,12 +1,12 @@
 const express = require("express");
 
-const Role = require("./../Models/roleModel");
-const User = require("./../Models/userModel");
+const Role = require("../Models/role");
+const User = require("../Models/user");
 
 const registerStudent = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const existing = await User.findOne({ email });
+    const existing = await User.findOne({ email }); //projection
 
     if (existing) {
       return res.status(400).json({

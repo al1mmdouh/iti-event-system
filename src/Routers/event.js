@@ -1,10 +1,6 @@
 const { Router } = require("express");
 
-const {
-  eventValidationRules,
-  validateEvent,
-  eventUpdateValidationRules,
-} = require("./../Middlewares/eventValidation");
+const { validate } = require("../Middlewares/validation");
 
 const {
   getAllEvents,
@@ -12,9 +8,14 @@ const {
   addEvent,
   editEvent,
   deleteEvent,
-} = require("./../Controllers/eventController");
+} = require("../Controllers/event");
 
-const { authenticate, checkRole } = require("./../Middlewares/authentication");
+const {
+  eventValidationRules,
+  eventUpdateValidationRules,
+} = require("../Models/event");
+
+const { authenticate, checkRole } = require("../Middlewares/authentication");
 
 const eventRoute = Router();
 
@@ -24,8 +25,7 @@ eventRoute
   .post(
     authenticate,
     checkRole(["admin"]),
-    eventValidationRules(),
-    validateEvent,
+    validate(eventValidationRules),
     addEvent
   );
 
@@ -35,8 +35,7 @@ eventRoute
   .put(
     authenticate,
     checkRole(["admin"]),
-    eventUpdateValidationRules(),
-    validateEvent,
+    validate(eventUpdateValidationRules),
     editEvent
   )
   .delete(authenticate, checkRole(["admin"]), deleteEvent);
